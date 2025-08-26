@@ -156,28 +156,6 @@ public class Gun : MonoBehaviour
     }
     public bool ReLoad()
     {
-        //if (currentState == State.Empty
-        //    && ammoRemain >= gunData.magCapacity
-        //    && Time.time > (reloadTime + gunData.reloadTime))
-        //{
-        //    reloadTime = Time.time;
-        //    ammoRemain -= gunData.magCapacity;
-        //    magAmmo = gunData.magCapacity;
-        //    currentState = State.Ready;
-        //    Debug.Log($"³²Àº ÅºÃ¢: {ammoRemain}");
-        //}
-        //else if (currentState == State.Ready
-        //    && ammoRemain >= gunData.magCapacity - magAmmo
-        //    && gunData.magCapacity > magAmmo
-        //    && Time.time > (reloadTime + gunData.reloadTime))
-        //{
-        //    reloadTime = Time.time;
-        //    ammoRemain -= gunData.magCapacity - magAmmo;
-        //    magAmmo = gunData.magCapacity;
-        //    currentState = State.Ready;
-        //    Debug.Log($"³²Àº ÅºÃ¢: {ammoRemain}");
-        //}
-        //else { return false; }
         if (CurrentState == State.Reloading
             || ammoRemain == 0
             || magAmmo == gunData.magCapacity)
@@ -210,5 +188,10 @@ public class Gun : MonoBehaviour
         }
 
         CurrentState = State.Ready;
+    }
+
+    public void AddAmmo(int amount)
+    {
+        ammoRemain = Mathf.Min(ammoRemain + amount, gunData.startAmmoRemain);
     }
 }

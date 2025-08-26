@@ -6,8 +6,8 @@ public class LivingEntity : MonoBehaviour, IDamagable
 {
     public float MaxHealth = 100f;
 
-    public float Health { get; private set; }
-    public bool IsDead { get; private set; }
+    public float Health { get; set; }
+    public bool IsDead { get; protected set; }
 
     public event Action OnDeath;
 
@@ -26,7 +26,7 @@ public class LivingEntity : MonoBehaviour, IDamagable
             Die();
         }
     }
-    public virtual void Die()
+    protected virtual void Die()
     {
         if (OnDeath != null)
         {

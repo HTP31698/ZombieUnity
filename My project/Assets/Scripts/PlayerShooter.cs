@@ -5,6 +5,12 @@ public class PlayerShooter : MonoBehaviour
     public static readonly int IdReload = Animator.StringToHash("Reload");
     public Gun gun;
 
+    private Vector3 gunPosition;
+    private Quaternion gunRotation;
+
+    private Rigidbody gunRb;
+    private Collider gunCollider;
+
     private PlayerInput input;
     private Animator animator;
 
@@ -16,6 +22,12 @@ public class PlayerShooter : MonoBehaviour
     {
         input = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
+
+        gunRb = gun.GetComponent<Rigidbody>();
+        gunCollider = gun.GetComponent<Collider>();
+
+        gunPosition = gun.transform.localPosition;
+        gunRotation = gun.transform.localRotation;
     }
 
     private void Update()
@@ -31,6 +43,20 @@ public class PlayerShooter : MonoBehaviour
                 animator.SetTrigger(IdReload);
             }
         }
+    }
+
+    private void OnEnable()
+    {
+        gunRb.isKinematic = true;
+        gunCollider.enabled = false;
+        gun.transform.localPosition = gunPosition;
+        gun.transform.localRotation = gunRotation;
+    }
+
+    private void OnDisable()
+    {
+        gunRb.isKinematic = false;
+        gunCollider.enabled = true;
     }
 
     private void OnAnimatorIK(int layerIndex)
