@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Item : MonoBehaviour, IItem
 {
@@ -10,13 +11,20 @@ public class Item : MonoBehaviour, IItem
     }
     public Types itemType;
     public int value = 10;
+
+    private void Update()
+    {
+        
+    }
+
     public void Use(GameObject other)
     {
         switch (itemType)
         {
             case Types.Coin:
                 {
-                    Debug.Log("Coin");
+                    var gm = other.GetComponent<GameManager>();
+                    gm?.AddScore(value);
                 }
                 break;
             case Types.Ammo:

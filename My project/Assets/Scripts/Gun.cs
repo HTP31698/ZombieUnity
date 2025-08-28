@@ -4,6 +4,8 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class Gun : MonoBehaviour
 {
+    public UIManager uiManager;
+
     public enum State
     {
         Ready,
@@ -63,6 +65,8 @@ public class Gun : MonoBehaviour
         lastFireTime = 0f;
 
         CurrentState = State.Ready;
+
+        uiManager.SetAmmoText(magAmmo, ammoRemain);
     }
 
     private void Update()
@@ -118,6 +122,7 @@ public class Gun : MonoBehaviour
         {
             lastFireTime = Time.time;
             Shoot();
+            uiManager.SetAmmoText(magAmmo, ammoRemain);
         }
     }
 
@@ -180,11 +185,13 @@ public class Gun : MonoBehaviour
             magAmmo = gunData.magCapacity;
             ammoRemain -= magAmmo;
             Debug.Log($"³²Àº ÅºÃ¢: {ammoRemain}");
+            uiManager.SetAmmoText(magAmmo, ammoRemain);
         }
         else
         {
             ammoRemain = 0;
             Debug.Log($"³²Àº ÅºÃ¢: {ammoRemain}");
+            uiManager.SetAmmoText(magAmmo, ammoRemain);
         }
 
         CurrentState = State.Ready;
@@ -193,5 +200,6 @@ public class Gun : MonoBehaviour
     public void AddAmmo(int amount)
     {
         ammoRemain = Mathf.Min(ammoRemain + amount, gunData.startAmmoRemain);
+        uiManager.SetAmmoText(magAmmo, ammoRemain);
     }
 }
